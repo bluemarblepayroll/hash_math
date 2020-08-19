@@ -34,7 +34,7 @@ module HashMath
       # the first will serve as the prototype for each returned hash
       # the second will be one to use for value extraction.
       # Returns an array of hashes.
-      def expand(base_hash, value_hash)
+      def expand(base_hash, value_hash) # :nodoc:
         keys.map do |key|
           base_hash.merge(
             coalesce_key => key,

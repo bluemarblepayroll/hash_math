@@ -230,6 +230,72 @@ The `rows` variable should now be equivalent to:
 
 Note: `HashMath::Unpivot#add` also exists to update an already instantiated object with new pivot_sets.
 
+### Mapper: Constant-Time Cross-Mapper
+
+The general use-case for `HashMath::Mapper` is to store pre-materialized lookups and then use those lookups efficiently to fill in missing data for a hash.
+
+For example: say we have incoming data representing patients, but this incoming data is value-oriented, not entity/identity-oriented, which may be what we need to ingest it properly:
+
+````ruby
+patient = { patient_id: 2, patient_status: 'active', marital_status: 'married' }
+````
+
+It is not sufficient for us to use patient_status and marital_status, what we need is the entity identifiers for those values.  What we can do is load up a HashMath::Mapper instance with these values and let it do the work for us:
+
+````ruby
+patient_statuses = [
+  { id: 1, name: 'active' },
+  { id: 2, name: 'inactive' },
+  { id: 3, name: 'archived' }
+]
+
+marital_statuses = [
+  { id: 1, code: 'single' },
+  { id: 2, code: 'married' },
+  { id: 3, code: 'divorced' }
+]
+
+mappings = [
+  {
+    lookup: {
+      name: :patient_statuses,
+      by: :name
+    },
+    set: :patient_status_id,
+    value: :patient_status,
+    with: :id
+  },
+  {
+    lookup: {
+      name: :marital_statuses,
+      by: :code
+    },
+    set: :marital_status_id,
+    value: :marital_status,
+    with: :id
+  }
+]
+
+mapper = HashMath::Mapper
+  .new(mappings)
+  .add_each(:patient_statuses, patient_statuses)
+  .add_each(:marital_statuses, marital_statuses)
+
+mapped_patient = mapper.map(patient)
+````
+
+The variable `mapped_patient` should now be equal to:
+
+````ruby
+{
+  patient_id: 2,
+  patient_status: 'active',
+  marital_status: 'single',
+  patient_status_id: 1,
+  marital_status_id: 2
+}
+````
+
 ## Contributing
 
 ### Development Environment Configuration

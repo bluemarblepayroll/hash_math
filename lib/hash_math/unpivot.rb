@@ -13,7 +13,6 @@ module HashMath
   # This class has the ability to extrapolate one hash (row) into multiple hashes (rows) while
   # unpivoting specific keys into key-value pairs.
   class Unpivot
-    acts_as_hashable
     extend Forwardable
 
     attr_reader :pivot_set

@@ -1,10 +1,16 @@
-# 1.1.0 (August 13t, 2020)
+# 1.2.0 (TBD)
 
-Adding:
+Additions:
 
-* HashMath#Unpivot class and implementation.
+* HashMath::Mapper
 
-Removing:
+# 1.1.0 (August 13th, 2020)
+
+Additions:
+
+* HashMath::Unpivot
+
+Removals:
 
 * Support for Ruby < 2.5
 

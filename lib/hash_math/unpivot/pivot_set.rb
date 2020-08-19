@@ -32,7 +32,7 @@ module HashMath
 
       # An aggregation of Pivot#expand.  This method will iterate over all pivots
       # and expand them all out.
-      def expand(hash)
+      def expand(hash) # :nodoc:
         base_hash = make_base_hash(hash)
 
         pivots.map { |pivot| pivot.expand(base_hash, hash) }

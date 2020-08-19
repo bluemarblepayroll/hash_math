@@ -9,6 +9,7 @@
 
 require 'acts_as_hashable'
 
+require_relative 'hash_math/mapper'
 require_relative 'hash_math/matrix'
 require_relative 'hash_math/record'
 require_relative 'hash_math/table'
