@@ -215,7 +215,7 @@ pivot_set = {
   ]
 }
 
-rows = HashMath::Unpivot.new(pivot_set).perform(patient)
+rows = HashMath::Unpivot.new(pivot_set).expand(patient)
 ````
 
 The `rows` variable should now be equivalent to:
